@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- 
+		bean的继承和依赖关系
+			parent:继承关系标签,指定继承的bean的id名称
+			depends-on:依赖关系标签,指定依赖bean的id名称
+	 -->
+
+    <bean id="address" class="com.youyuan.spring.bean.autowire.Address" p:provinceName="北京" p:cityName="西单"></bean>
+    
+    <!-- bean的继承使用parent标签  指定继承bean的id名称,如果子bean属性指定了就会覆盖父bean的属性 -->
+    <bean id="address2" p:provinceName="江苏" parent="address"></bean>
+    
+    <bean id="car" class="com.youyuan.spring.bean.autowire.Car" p:carName="宝马" p:price="350000" p:maxSpeed="260"></bean>
+    
+    <!-- bean的依赖使用depends-on标签  指定依赖bean的id名称 -->
+    <bean id="person" class="com.youyuan.spring.bean.autowire.Person" p:address-ref="address" p:sex="1" p:userName="京东购物商城" depends-on="car"></bean>    
+        
+</beans>

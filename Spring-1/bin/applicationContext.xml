@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- 
+		Bean注入:java通过反射机制生成bean对象,并且必须有一个无参的构造方法
+			id:唯一标识,默认是bean的名字第一个字母小写
+			class:bean的全路径名
+		Bean的属性赋值两种方式:
+			1、属性注入:属性必须要有setx方法
+				property:属性标签
+					name:属性名
+					value:属性值
+			2、构造函数注入:
+				constructor-arg:构造函数标签
+					value:值
+					index:构造函数中的参数索引从0开始
+					type:参数的类型
+			3、属性赋值时如果有特殊字符使用<![CDATA[]]>,放在CDATA中会原样输出
+			4、内部bean赋值
+			5、级联属性赋值:要求对象不能为空,先创建对象
+				
+	 -->
+	 
+	<!-- 通过注入方式给bean属性赋值 -->
+	<bean id="helloWorld" class="com.youyuan.spring.bean.HelloWorld">
+		<property name="userName" value="有缘"></property>
+		<property name="age" value="26"></property>
+	</bean>
+	
+	<!-- 通过构造函数方式给bean属性赋值 -->
+	<!-- 
+		构造函数赋值属性时可以使用两种方式
+		1、value属性:   onstructor-arg value="北京"
+		2、value标签:
+	 -->
+	<bean id="helloWorld2" class="com.youyuan.spring.bean.HelloWorld">
+		<constructor-arg value="北京"></constructor-arg>
+		<constructor-arg>
+			<value>32</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="car" class="com.youyuan.spring.bean.Car">
+		<property name="name" value="宝马"></property>
+		<property name="price" value="350000"></property>
+		<property name="maxSpeed" value="220"></property>
+	</bean>
+	
+	<bean id="person" class="com.youyuan.spring.bean.Person">
+		<property name="userName" value="万达"></property>
+		<property name="age" value="30"></property>
+		<property name="sex" value="1"></property>
+		<property name="address" value="北京朝阳区"></property>
+		<property name="car" ref="car"></property>
+	</bean>
+	
+	<!-- 
+		内部bean赋值
+	 -->
+	<bean id="person1" class="com.youyuan.spring.bean.Person">
+		<property name="userName" value="首都"></property>
+		<property name="age" value="26"></property>
+		<property name="sex" value="0"></property>
+		<property name="address" value="北京"></property>
+		<property name="car">
+			<bean class="com.youyuan.spring.bean.Car">
+				<property name="name" value="别克"></property>
+				<property name="price" value="230000"></property>
+				<property name="maxSpeed" value="220"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 级联属性赋值 -->
+	<bean id="car2" class="com.youyuan.spring.bean.Car"></bean>
+	<bean id="person2" class="com.youyuan.spring.bean.Person">
+		<property name="userName" value="首都"></property>
+		<property name="age" value="26"></property>
+		<property name="sex" value="0"></property>
+		<property name="address" value="北京"></property>
+		<property name="car" ref="car2"></property>
+		<property name="car.name" value="奔驰"></property>
+		<property name="car.price" value="120000"></property>
+		<property name="car.maxSpeed" value="260"></property>
+	</bean>
+	
+	
+	<bean id="newCar" class="com.youyuan.spring.bean.collection.Car">
+		<property name="name" value="奔驰"></property>
+		<property name="price" value="2000000"></property>
+		<property name="maxSpeed" value="260"></property>
+	</bean>
+	<bean id="newCar2" class="com.youyuan.spring.bean.collection.Car">
+		<property name="name" value="宝马"></property>
+		<property name="price" value="1200000"></property>
+		<property name="maxSpeed" value="270"></property>
+	</bean>
+	<bean id="newCar3" class="com.youyuan.spring.bean.collection.Car">
+		<property name="name" value="别克"></property>
+		<property name="price" value="320000"></property>
+		<property name="maxSpeed" value="220"></property>
+	</bean>
+	<!-- list集合类型属性配置注入 -->
+	<bean id="newPerson" class="com.youyuan.spring.bean.collection.Person">
+		<property name="userName" value="威震天"></property>
+		<property name="age" value="52"></property>
+		<property name="sex" value="1"></property>
+		<property name="address" value="桂林"></property>
+		<property name="cars">
+			<list>
+				<ref bean="newCar"/>
+				<ref bean="newCar2"/>
+				<ref bean="newCar3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- map集合类型属性注入 -->
+	<bean id="personMap" class="com.youyuan.spring.bean.collection.PersonMap">
+		<property name="userName" value="蜘蛛侠"></property>
+		<property name="age" value="39"></property>
+		<property name="sex" value="1"></property>
+		<property name="address" value="香港"></property>
+		<property name="mapCar">
+			<map>
+				<entry key="A" value-ref="newCar"></entry>
+				<entry key="B">
+					<ref bean="newCar2"/>
+				</entry>
+				<entry key="C">
+					<ref bean="newCar3"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- properties属性注入 -->
+	<bean id="personProperties" class="com.youyuan.spring.bean.collection.PersonProperties">
+		<property name="userName" value="葫芦娃"></property>
+		<property name="age" value="92"></property>
+		<property name="sex" value="1"></property>
+		<property name="address" value="云南"></property>
+		<property name="dataSource">
+			<!-- properties文件通过props标签的prop子标签赋值 -->
+			<props>
+				<prop key="dbName">mySql</prop>
+				<prop key="driver">com.mysql.jdbc.driver</prop>
+				<prop key="url">http://localhost:3306/spring</prop>
+				<prop key="userName">root</prop>
+				<prop key="passWord">123456789</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 通过util标签抽取公共配置信息,供其它bean调用 需要引入util命名空间 -->
+	<util:list id="cars">
+		<ref bean="newCar"/>
+		<ref bean="newCar2"/>
+		<ref bean="newCar3"/>
+	</util:list>
+	
+	<bean id="newPerson1" class="com.youyuan.spring.bean.collection.Person">
+		<property name="userName" value="威震天"></property>
+		<property name="age" value="52"></property>
+		<property name="sex" value="1"></property>
+		<property name="address" value="桂林"></property>
+		<property name="cars" ref="cars"></property>
+	</bean>
+	
+	<!-- P 可以直接为属性注入值   需要引入P命名空间 -->
+	<bean id="newPerson2" class="com.youyuan.spring.bean.collection.Person" p:address="上海" p:cars-ref="newCar"
+	 p:age="29" p:sex="1" p:userName="中华英雄们"></bean>
+       
+</beans>

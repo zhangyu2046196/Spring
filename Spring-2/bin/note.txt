@@ -1,0 +1,45 @@
+Spring Aop 面向切面编程步骤
+1、需要引入包
+	aopalliance.jar
+	aspectjweaver.jar
+	以上是第三方切面编程所需
+	
+	commons-logging-1.1.1.jar
+	以上日志所需包
+	
+	spring-aop-4.3.2.RELEASE.jar
+	spring-aspects-4.3.2.RELEASE.jar
+	以上spring aop所需包
+	
+	spring-beans-4.3.2.RELEASE.jar
+	spring-context-4.3.2.RELEASE.jar
+	spring-core-4.3.2.RELEASE.jar
+	spring-expression-4.3.2.RELEASE.jar
+	spring-tx-4.3.2.RELEASE.jar
+	以上公用包
+	
+2、在配置文件applicationContext.xml开启自动扫面(如果不想配置bean的方式管理情况下)
+	<context:component-scan base-package="com.youyuan.spring.aop"></context:component-scan>
+	
+3、在配置文件applicationContext.xml启动Aspect切面功能,会自动生成目标方法的代理对象
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+4、定义一个切面类,在类上通过注解方法声明切面(@Aspect),并且将这个切面类交给ioc容器管理(@Component,如果想通过注解的方式管理bean情况下)
+
+5、Spring Aop面向切面编程有五种通知方式
+	@Before 前置通知 (目标方法执行前执行)
+	@After  后置通知(目标方法执行后执行,无论是否发生异常都会执行)  
+	@AfterReturning 返回通知(目标方法执行后执行,且可以拿到目标方法执行的返回结果,属性指定execution表达式影响目标方法,returning属性指定目标方法执行后返回的结果赋值变量)
+	@AfterThrowing  异常通知(目标方法出现异常才会执行,且可以拿到异常结果)
+	环绕通知
+	
+6、execution表达式
+	execution (* com.sample.service.impl..*.*(..))
+	
+7、JoinPoint封装了切面的代理信息
+	Signature signature=joinPoint.getSignature();//切面对象
+	String methodName=signature.getName();//方法名
+	List<Object> argsList=Arrays.asList(joinPoint.getArgs());//请求参数
+	
+8、切面的优先级
+	@Order() 括号里面的值越小优先级越高

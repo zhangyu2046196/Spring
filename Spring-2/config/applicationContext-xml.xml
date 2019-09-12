@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/aop   
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+        
+    
+    
+    <!-- 以下是基于xml配置方式的Spring AOP -->
+    
+    <!-- 配置bean -->
+    <bean id="aspectSpring" class="com.youyuan.spring.aop.xml.AspectSpringImpl"></bean>
+    
+    <!-- 配置切面bean -->
+    <bean id="aspectAop" class="com.youyuan.spring.aop.xml.AspectAop"></bean>
+    
+    <bean id="aspectAopOrder" class="com.youyuan.spring.aop.xml.AspectAopOrder"></bean>
+    
+    <!-- 配置AOP -->
+    <aop:config>
+    	<!-- 配置切入点表达式 -->
+    	<aop:pointcut expression="execution(* com.youyuan.spring.aop.xml.*.*(..))" id="pointcut"/>
+    	<!-- 配置切面 -->
+    	<aop:aspect order="2" ref="aspectAop"><!-- 切面优先级  order()值越小优先级越高 -->
+    		<aop:before method="beforeMethod" pointcut-ref="pointcut"/><!-- 前置通知 -->
+    		<aop:after method="afterMethod" pointcut="execution(* com.youyuan.spring.aop.xml.*.*(..))"/><!-- 后置通知 -->
+    		<aop:after-returning method="afterReturningMethod" pointcut-ref="pointcut" returning="result"/><!-- 返回通知 -->
+    		<aop:after-throwing method="afterThrowingMethod" pointcut="execution(* com.youyuan.spring.aop.xml.*.*(..))" throwing="e"/><!-- 异常通知 -->
+    	</aop:aspect>
+    	
+    	<aop:aspect order="1" ref="aspectAopOrder"><!-- 切面优先级  order() 值越小优先级越高 -->
+    		<aop:before method="beforeMethod" pointcut-ref="pointcut"/><!-- 前置通知 -->
+    	</aop:aspect>
+    </aop:config>
+       
+</beans>

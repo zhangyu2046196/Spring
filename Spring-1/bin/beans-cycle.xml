@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+        
+    <!-- 
+    	bean的生命周期,可以通过init-method和destory-method指定bean的初始化和销毁时执行的方法
+    	bean在ioc容器实例化时调用init-method方法,当ioc容器关闭时调用destory-method方法
+     -->
+	<bean id="car" class="com.youyuan.spring.bean.cycle.Car" init-method="init" destroy-method="destory">
+		<property name="carName" value="宝马"></property>
+		<property name="price" value="430000"></property>
+		<property name="maxSpeed">
+			<value>230</value>
+		</property>
+	</bean>
+	
+	<!-- 
+		bean的处理器,不需要id属性,需要实现BeanPostProcessor接口,是对所有bean都起作用
+		BeanPostProcessor接口的方法:
+			public Object postProcessBeforeInitialization(Object bean, String beanName) bean的前置处理器
+			public Object postProcessAfterInitialization(Object bean, String beanName)  bean的后置处理器
+				参数bean代表配置文件中的bean
+				参数beanName代表配置文件中的bean的名字就是id属性值
+			
+			在bean的前置处理器或后置处理器中可以修改bean的属性
+			
+		加入bean的处理器后bean的生命周期如下
+			bean的前置处理器——>bean的init-method——>bean的后置处理器——>bean的destory-method
+				
+	 -->
+	<bean class="com.youyuan.spring.bean.cycle.MyBean"></bean>
+        
+</beans>

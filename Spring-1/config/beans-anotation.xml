@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+     
+     <!-- 
+     	ioc容器自动扫描标签
+     		base-package:指定要扫描的包名,多个包使用逗号分隔
+     		
+     	bean注解分为几类
+     		1、component:基本注解用于spring容器组件
+     		2、repository:用于注解持久层
+     		3、service:用于注解业务层
+     		4、controller:用于注解控制层
+     		
+     	resource-pattern:指定扫描哪个包下面的哪个类
+     	
+     	context:exclude-filter：用于排除指定表达式注解的组件
+     	
+     	context:component-filter ：只扫描指定表达式标注 的组件
+     	
+     	bean引用时可以使用@AutoWire和@Resource来实例化bean,如果一个接口被多个实现类实现,引用实现类时可以使用@Qualifier("")来指定实现类bean的名 称
+      -->
+     <context:component-scan base-package="com.youyuan.spring.bean.annotation"></context:component-scan>
+     
+     <!-- resource-pattern:指定扫描哪个包下面的哪个类 -->
+     <!-- <context:component-scan base-package="com.youyuan.spring.bean.annotation" resource-pattern="controller/*.class"></context:component-scan> -->
+     
+     <!-- <context:component-scan base-package="com.youyuan.spring.bean.annotation">
+     	
+     		context:exclude-filter：用于排除指定表达式注解的组件
+     	
+     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+     </context:component-scan> -->
+     
+     <!-- <context:component-scan base-package="com.youyuan.spring.bean.annotation">
+     	
+     		context:component-filter ：只扫描指定表达式标注 的组件
+     	
+     	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+     </context:component-scan> -->
+     
+        
+</beans>

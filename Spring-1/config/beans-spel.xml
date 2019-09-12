@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+     
+     <!-- 
+     	SpEL赋值字面值,用法#{''}
+      -->
+     <bean id="address" class="com.youyuan.spring.bean.spel.Address" p:provinceName="#{'江苏'}">
+     	<property name="cityName" value="#{'南京'}"></property>
+     </bean>
+     
+     <!-- 
+     	SpEL赋值一个表达式 用法#{3*32}
+      -->
+     <bean id="car" class="com.youyuan.spring.bean.spel.Car" p:carName="#{'宝马'}">
+     	<property name="maxSpeed" value="200"></property>
+     	<property name="price" value="#{4500*60}"></property>
+     </bean>
+     
+     
+     <!-- 
+     	SpEL赋值级联属性  用法#{address.cityName}
+     	SpEL赋值运算符  用法#{money>300000?金领:白领}
+      -->
+     <bean id="person" class="com.youyuan.spring.bean.spel.Person">
+     	<property name="userName" value="龙少爷"></property>
+     	
+     	<property name="sex" value="1"></property>
+     	
+     	<property name="money" value="490000"></property>
+     	
+     	<property name="age" value="#{'20'}"></property>
+     	
+     	<property name="cityName" value="#{address.cityName}"></property>
+     	
+     	<property name="info" value="#{car.price>300000?'金领':'白领'}"></property>
+     	
+     </bean>
+        
+</beans>        

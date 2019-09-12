@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+        
+    <!-- 
+    	通过静态工厂配置bean,就是调用静态工厂的静态方法获取bean的实例对象
+    	factory-method:工厂方法(获取bean实例的方法)
+    	constructor-arg:工厂的方法需要传参时使用
+     -->
+	<bean id="car" class="com.youyuan.spring.bean.factory.StaticCarFactory" factory-method="getCar">
+		<constructor-arg value="baoma"/>
+	</bean>
+	
+	<!-- 配置实例工厂的bean -->
+	<bean id="instanceCarFactory" class="com.youyuan.spring.bean.factory.InstanceCarFactory"></bean>
+	
+	<!-- 
+		通过实例工厂配置bean,调用实例工厂的方法获取bean实例对象
+		factory-bean:工厂bean的名称(id的唯一名称)
+		factory-method:工厂方法
+		constructor-arg:工厂方法需要传参时使用
+	 -->
+	<bean id="car2" factory-bean="instanceCarFactory" factory-method="getCar">
+		<constructor-arg value="bieke"></constructor-arg>
+	</bean>
+	
+	<bean id="car3" class="com.youyuan.spring.bean.factory.CarBeanFactory" p:carName="法拉利"></bean>
+        
+</beans>

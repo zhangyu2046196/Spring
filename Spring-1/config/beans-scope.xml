@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    
+    <!-- 
+    	bean的作用域
+    		scope：用于标注bean的作用域,有以下几种类型,默认singleton
+    			singleton:单例,spring的ioc容器实例化的时候进行初始化bean,且在ioc容器中只有一个实例对象
+    			prototype:原型,每请求一次都会创建一个新的实例对象
+    			session:http session作用域
+    			request:http request请求中,且在http request请求中
+     -->
+	<bean id="car" class="com.youyuan.spring.bean.autowire.Car" p:carName="宝马" p:price="430000" p:maxSpeed="220" scope="singleton"></bean>        
+        
+</beans>        
